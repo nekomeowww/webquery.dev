@@ -8,7 +8,7 @@
   [<a href="https://webquery.dev">Try it</a>]
 </p>
 
-WebQuery.dev is a tool that allow you to query anything with DuckDB compatible SQL.
+WebQuery.dev is a tool that allows you to query anything with DuckDB compatible SQL.
 
 ## Development
 
