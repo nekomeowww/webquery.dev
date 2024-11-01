@@ -8,6 +8,7 @@ import {
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
+import { presetShadcn } from 'unocss-preset-shadcn'
 
 export default defineConfig({
   shortcuts: [
@@ -28,7 +29,31 @@ export default defineConfig({
         mono: 'DM Mono',
       },
     }),
+    presetShadcn({ color: 'gray' }),
   ],
+  // By default, `.ts` and `.js` files are NOT extracted.
+  // If you want to extract them, use the following configuration.
+  // It's necessary to add the following configuration if you use shadcn-vue or shadcn-svelte.
+  content: {
+    pipeline: {
+      include: [
+        // the default
+        /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
+        // include js/ts files
+        'components/ui/**/*.{js,ts}',
+      ],
+    },
+  },
+  safelist: ['dark'],
+  theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
+  },
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),

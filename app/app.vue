@@ -20,10 +20,11 @@ body,
   height: 100vh;
   margin: 0;
   padding: 0;
+  overscroll-behavior: none;
 }
 
 html.dark {
-  background: #222;
+  background: #020617;
   color: white;
 }
 </style>
