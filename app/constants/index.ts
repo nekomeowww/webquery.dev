@@ -1,2 +1,2 @@
-export const appName = 'Vitesse for Nuxt 3'
-export const appDescription = 'Vitesse for Nuxt 3'
+export const appName = 'WebQuery.dev'
+export const appDescription = 'Query anything in a snap, within Browser!'
