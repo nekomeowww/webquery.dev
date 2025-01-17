@@ -23,7 +23,6 @@ import duckdb_wasm_eh from '@duckdb/duckdb-wasm/dist/duckdb-eh.wasm?url'
 import duckdb_wasm from '@duckdb/duckdb-wasm/dist/duckdb-mvp.wasm?url'
 
 import {
-  createColumnHelper,
   FlexRender,
   getCoreRowModel,
   getExpandedRowModel,

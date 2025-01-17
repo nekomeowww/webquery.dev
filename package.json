@@ -13,6 +13,13 @@
     "lint": "eslint .",
     "typecheck": "vue-tsc --noEmit"
   },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "^1.29.0",
+    "@tanstack/vue-table": "^8.20.5",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.473.0",
+    "tailwind-merge": "^2.6.0"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^3.14.0",
     "@iconify-json/carbon": "^1.2.5",
@@ -36,12 +43,5 @@
     "typescript": "^5.7.3",
     "unocss-preset-shadcn": "^0.3.1",
     "vue-tsc": "^2.2.0"
-  },
-  "dependencies": {
-    "@duckdb/duckdb-wasm": "^1.29.0",
-    "@tanstack/vue-table": "^8.20.5",
-    "clsx": "^2.1.1",
-    "lucide-vue-next": "^0.473.0",
-    "tailwind-merge": "^2.6.0"
   }
 }
