@@ -15,11 +15,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-
 import * as duckdb from '@duckdb/duckdb-wasm'
 import eh_worker from '@duckdb/duckdb-wasm/dist/duckdb-browser-eh.worker.js?url'
 import mvp_worker from '@duckdb/duckdb-wasm/dist/duckdb-browser-mvp.worker.js?url'
 import duckdb_wasm_eh from '@duckdb/duckdb-wasm/dist/duckdb-eh.wasm?url'
+
 import duckdb_wasm from '@duckdb/duckdb-wasm/dist/duckdb-mvp.wasm?url'
 
 import {
@@ -31,7 +31,6 @@ import {
   getSortedRowModel,
   useVueTable,
 } from '@tanstack/vue-table'
-
 import { h, ref } from 'vue'
 
 const MANUAL_BUNDLES: duckdb.DuckDBBundles = {
@@ -52,6 +51,9 @@ const query = ref<string>('SELECT * FROM generate_series(1, 100) t(v);')
 const resultArray = ref<any[]>([])
 
 const columns = ref<ColumnDef<any>[]>([])
+
+const errored = ref(false)
+const errorMessage = ref('')
 
 onMounted(async () => {
   // Select a bundle based on browser checks
@@ -84,20 +86,36 @@ function toObject(val: any) {
 }
 
 async function handleQuery() {
-  if (!db.value || !conn.value)
-    return
+  try {
+    errored.value = false
+    errorMessage.value = ''
 
-  const result = await conn.value.query(query.value)
+    if (!db.value || !conn.value)
+      return
 
-  columns.value = result.schema.fields.map((field) => {
-    return {
-      accessorKey: field.name,
-      header: field.name,
-      cell: ({ row }) => h('span', {}, row.getValue(field.name)),
+    const result = await conn.value.query(query.value)
+
+    columns.value = result.schema.fields.map((field) => {
+      return {
+        accessorKey: field.name,
+        header: field.name,
+        cell: ({ row }) => h('span', {}, row.getValue(field.name)),
+      }
+    })
+
+    resultArray.value = toObject(result.toArray())
+  }
+  catch (err) {
+    console.error(err)
+    errored.value = true
+
+    if (err instanceof Error) {
+      errorMessage.value = err.message
     }
-  })
-
-  resultArray.value = toObject(result.toArray())
+    else {
+      errorMessage.value = String(err)
+    }
+  }
 }
 
 const sorting = ref<SortingState>([])
@@ -115,11 +133,6 @@ const table = computed(() => {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    // onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
-    // onColumnFiltersChange: updaterOrValue => valueUpdater(updaterOrValue, columnFilters),
-    // onColumnVisibilityChange: updaterOrValue => valueUpdater(updaterOrValue, columnVisibility),
-    // onRowSelectionChange: updaterOrValue => valueUpdater(updaterOrValue, rowSelection),
-    // onExpandedChange: updaterOrValue => valueUpdater(updaterOrValue, expanded),
     state: {
       get sorting() { return sorting.value },
       get columnFilters() { return columnFilters.value },
@@ -132,12 +145,34 @@ const table = computed(() => {
 </script>
 
 <template>
-  <div flex flex-col gap-4>
-    <h1 flex items-center gap-2 text-left font-mono>
+  <div flex flex-col gap-4 text-left>
+    <h1 flex items-center gap-2 font-mono>
       <div i-heroicons:command-line-solid text="indigo-600 dark:indigo-300" text-2xl />
       <span text-xl>WebQuery</span>
     </h1>
-    <div flex flex-col gap-1>
+    <div flex flex-col gap-2>
+      <div
+        v-if="errored"
+        bg="red/5 dark:red-300/15"
+        border="1 solid red/60 dark:red-300/50"
+        outline="none"
+        w-full rounded p-2 font-mono
+      >
+        <p>
+          {{ errorMessage }}
+        </p>
+      </div>
+      <div
+        v-else
+        bg="green/5 dark:green-300/15"
+        border="1 solid green/60 dark:green-300/50"
+        outline="none"
+        w-full rounded p-2 font-mono
+      >
+        <p>
+          OK
+        </p>
+      </div>
       <div>
         <textarea
           v-model="query"
@@ -157,7 +192,7 @@ const table = computed(() => {
         Run
       </button>
     </div>
-    <div>
+    <div text-center>
       <div class="border rounded-md">
         <Table>
           <TableHeader>
