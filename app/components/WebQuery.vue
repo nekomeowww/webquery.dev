@@ -156,11 +156,9 @@ const table = computed(() => {
         bg="red/5 dark:red-300/15"
         border="1 solid red/60 dark:red-300/50"
         outline="none"
-        w-full rounded p-2 font-mono
+        w-full whitespace-pre-line rounded p-2 font-mono
       >
-        <p>
-          {{ errorMessage }}
-        </p>
+        {{ errorMessage }}
       </div>
       <div
         v-else
