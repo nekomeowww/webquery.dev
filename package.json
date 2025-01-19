@@ -17,6 +17,7 @@
     "@duckdb/duckdb-wasm": "^1.29.0",
     "@tanstack/vue-table": "^8.20.5",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "lucide-vue-next": "^0.473.0",
     "tailwind-merge": "^2.6.0"
   },

@@ -6,7 +6,6 @@ import type {
   SortingState,
   VisibilityState,
 } from '@tanstack/vue-table'
-
 import {
   Table,
   TableBody,
@@ -15,11 +14,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+
 import * as duckdb from '@duckdb/duckdb-wasm'
 import eh_worker from '@duckdb/duckdb-wasm/dist/duckdb-browser-eh.worker.js?url'
 import mvp_worker from '@duckdb/duckdb-wasm/dist/duckdb-browser-mvp.worker.js?url'
 import duckdb_wasm_eh from '@duckdb/duckdb-wasm/dist/duckdb-eh.wasm?url'
-
 import duckdb_wasm from '@duckdb/duckdb-wasm/dist/duckdb-mvp.wasm?url'
 
 import {
@@ -31,6 +30,8 @@ import {
   getSortedRowModel,
   useVueTable,
 } from '@tanstack/vue-table'
+
+import { formatDistance } from 'date-fns'
 import { h, ref } from 'vue'
 
 const MANUAL_BUNDLES: duckdb.DuckDBBundles = {
@@ -52,6 +53,7 @@ const resultArray = ref<any[]>([])
 
 const columns = ref<ColumnDef<any>[]>([])
 
+const queryTimeElapse = ref('')
 const errored = ref(false)
 const errorMessage = ref('')
 
@@ -77,14 +79,6 @@ onUnmounted(async () => {
   await worker.value?.terminate()
 })
 
-function toObject(val: any) {
-  return JSON.parse(JSON.stringify(val, (key, value) =>
-    typeof value === 'bigint'
-      ? value.toString()
-      : value),
-  )
-}
-
 async function handleQuery() {
   try {
     errored.value = false
@@ -93,7 +87,14 @@ async function handleQuery() {
     if (!db.value || !conn.value)
       return
 
+    const startTime = performance.now()
+
     const result = await conn.value.query(query.value)
+    // eslint-disable-next-line no-console
+    console.debug('Queried result:', result)
+
+    const endTime = performance.now()
+    queryTimeElapse.value = formatDistance(endTime, startTime)
 
     columns.value = result.schema.fields.map((field) => {
       return {
@@ -103,7 +104,7 @@ async function handleQuery() {
       }
     })
 
-    resultArray.value = toObject(result.toArray())
+    resultArray.value = result.toArray().map(row => row.toJSON())
   }
   catch (err) {
     console.error(err)
@@ -167,6 +168,9 @@ const table = computed(() => {
         outline="none"
         w-full rounded p-2 font-mono
       >
+        <p v-if="queryTimeElapse">
+          OK, {{ queryTimeElapse }}
+        </p>
         <p>
           OK
         </p>
