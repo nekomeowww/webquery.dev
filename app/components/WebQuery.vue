@@ -15,12 +15,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import * as duckdb from '@duckdb/duckdb-wasm'
-import eh_worker from '@duckdb/duckdb-wasm/dist/duckdb-browser-eh.worker.js?url'
-import mvp_worker from '@duckdb/duckdb-wasm/dist/duckdb-browser-mvp.worker.js?url'
-import duckdb_wasm_eh from '@duckdb/duckdb-wasm/dist/duckdb-eh.wasm?url'
-import duckdb_wasm from '@duckdb/duckdb-wasm/dist/duckdb-mvp.wasm?url'
-
 import {
   FlexRender,
   getCoreRowModel,
@@ -31,93 +25,21 @@ import {
   useVueTable,
 } from '@tanstack/vue-table'
 
-import { formatDistance } from 'date-fns'
 import { h, ref } from 'vue'
+import { bundles } from '~/lib/duckdb-vite-bundles'
+import { useDuckDBQuery } from '../composables/duckdb'
 
-const MANUAL_BUNDLES: duckdb.DuckDBBundles = {
-  mvp: {
-    mainModule: duckdb_wasm,
-    mainWorker: mvp_worker,
-  },
-  eh: {
-    mainModule: duckdb_wasm_eh,
-    mainWorker: eh_worker,
-  },
-}
-
-const worker = ref<Worker>()
-const db = ref<duckdb.AsyncDuckDB>()
-const conn = ref<duckdb.AsyncDuckDBConnection>()
 const query = ref<string>('SELECT * FROM generate_series(1, 100) t(v);')
-const resultArray = ref<any[]>([])
-
-const columns = ref<ColumnDef<any>[]>([])
-
-const queryTimeElapse = ref('')
-const errored = ref(false)
-const errorMessage = ref('')
-
-onMounted(async () => {
-  // Select a bundle based on browser checks
-  const bundle = await duckdb.selectBundle(MANUAL_BUNDLES)
-  // Instantiate the asynchronus version of DuckDB-wasm
-  worker.value = new Worker(bundle.mainWorker!)
-  const logger = new duckdb.ConsoleLogger()
-
-  db.value = new duckdb.AsyncDuckDB(logger, worker.value)
-  await db.value.instantiate(bundle.mainModule, bundle.pthreadWorker)
-
-  conn.value = await db.value.connect()
-
-  await handleQuery()
-})
-
-onUnmounted(async () => {
-  // Closing everything
-  await conn.value?.close()
-  await db.value?.terminate()
-  await worker.value?.terminate()
-})
-
-async function handleQuery() {
-  try {
-    errored.value = false
-    errorMessage.value = ''
-
-    if (!db.value || !conn.value)
-      return
-
-    const startTime = performance.now()
-
-    const result = await conn.value.query(query.value)
-    // eslint-disable-next-line no-console
-    console.debug('Queried result:', result)
-
-    const endTime = performance.now()
-    queryTimeElapse.value = formatDistance(endTime, startTime)
-
-    columns.value = result.schema.fields.map((field) => {
-      return {
-        accessorKey: field.name,
-        header: field.name,
-        cell: ({ row }) => h('span', {}, row.getValue(field.name)),
-      }
-    })
-
-    resultArray.value = result.toArray().map(row => row.toJSON())
+const queryInput = ref<string>(query.value)
+const { error, errored, result } = useDuckDBQuery(query, { bundles: bundles(), immediate: true })
+const resultArray = computed(() => result.value?.toArray().map(row => row.toJSON()) || [])
+const columns = computed<ColumnDef<any>[]>(() => (result.value?.schema.fields.map((field) => {
+  return {
+    accessorKey: field.name,
+    header: field.name,
+    cell: ({ row }) => h('span', {}, row.getValue(field.name)),
   }
-  catch (err) {
-    console.error(err)
-    errored.value = true
-
-    if (err instanceof Error) {
-      errorMessage.value = err.message
-    }
-    else {
-      errorMessage.value = String(err)
-    }
-  }
-}
+}) || []))
 
 const sorting = ref<SortingState>([])
 const columnFilters = ref<ColumnFiltersState>([])
@@ -159,7 +81,7 @@ const table = computed(() => {
         outline="none"
         w-full whitespace-pre-line rounded p-2 font-mono
       >
-        {{ errorMessage }}
+        {{ error }}
       </div>
       <div
         v-else
@@ -168,16 +90,13 @@ const table = computed(() => {
         outline="none"
         w-full rounded p-2 font-mono
       >
-        <p v-if="queryTimeElapse">
-          OK, {{ queryTimeElapse }}
-        </p>
         <p>
           OK
         </p>
       </div>
       <div>
         <textarea
-          v-model="query"
+          v-model="queryInput"
           bg="black/2 dark:white/5"
           border="1 solid black/10 dark:white/15"
           outline="none"
@@ -189,7 +108,7 @@ const table = computed(() => {
         border="1 solid indigo-600 dark:indigo-300"
         text="black dark:white xs"
         w-fit rounded px-2 py-1
-        @click="handleQuery"
+        @click="() => query = queryInput"
       >
         Run
       </button>
