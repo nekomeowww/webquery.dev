@@ -26,12 +26,12 @@ import {
 } from '@tanstack/vue-table'
 
 import { h, ref } from 'vue'
-import { bundles } from '~/lib/duckdb-vite-bundles'
+import { getViteBundles } from '~/lib/duckdb-vite-bundles'
 import { useDuckDBQuery } from '../composables/duckdb'
 
 const query = ref<string>('SELECT * FROM generate_series(1, 100) t(v);')
 const queryInput = ref<string>(query.value)
-const { error, errored, result } = useDuckDBQuery(query, { bundles: bundles(), immediate: true })
+const { error, errored, result } = useDuckDBQuery(query, { bundles: getViteBundles(), immediate: true })
 const resultArray = computed(() => result.value?.toArray().map(row => row.toJSON()) || [])
 const columns = computed<ColumnDef<any>[]>(() => (result.value?.schema.fields.map((field) => {
   return {

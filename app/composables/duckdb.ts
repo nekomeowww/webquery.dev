@@ -1,7 +1,7 @@
 import type { AsyncDuckDB, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm'
 
 import { connect, type ConnectOptions } from '../lib/duckdb'
-import { bundles } from '../lib/duckdb-vite-bundles'
+import { getViteBundles } from '../lib/duckdb-vite-bundles'
 
 export function useDuckDB(options?: ConnectOptions) {
   const worker = ref<Worker>()
@@ -15,7 +15,7 @@ export function useDuckDB(options?: ConnectOptions) {
 
   return {
     connect: async () => {
-      const session = await connect({ ...options, bundles: bundles() })
+      const session = await connect({ ...options, bundles: getViteBundles() })
 
       worker.value = session.worker
       db.value = session.db

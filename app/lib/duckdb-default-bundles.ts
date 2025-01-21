@@ -1,6 +1,6 @@
 import type { DuckDBBundles } from '@duckdb/duckdb-wasm'
 
-export function bundles(): DuckDBBundles {
+export function getBundles(): DuckDBBundles {
   return {
     mvp: {
       mainModule: './duckdb-mvp.wasm',

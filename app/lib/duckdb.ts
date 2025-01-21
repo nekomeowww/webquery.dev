@@ -1,6 +1,6 @@
 import { AsyncDuckDB, ConsoleLogger, type DuckDBBundles, selectBundle } from '@duckdb/duckdb-wasm'
 import { defu } from 'defu'
-import { bundles } from './duckdb-default-bundles'
+import { getBundles } from './duckdb-default-bundles'
 
 export type ConnectOptions = ConnectRequiredOptions & ConnectOptionalOptions
 
@@ -13,7 +13,7 @@ export interface ConnectRequiredOptions {
 }
 
 export async function connect(options: ConnectOptions) {
-  const opts = defu(options, { bundles: bundles() })
+  const opts = defu(options, { bundles: getBundles() })
 
   const bundle = await selectBundle(opts.bundles)
   const worker = new Worker(bundle.mainWorker!)
