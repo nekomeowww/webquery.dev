@@ -7,8 +7,47 @@ import { h, ref } from 'vue'
 import { useDuckDBQuery } from '../composables/duckdb'
 import { format } from '../lib/duckdb-format'
 import { getViteBundles } from '../lib/duckdb-vite-bundles'
+import BasicTextarea from './BasicTextarea.vue'
 
-const query = ref<string>('SELECT CURRENT_TIME;')
+const query = ref<string>(`SELECT
+    -- Numeric Types
+    1::smallint AS 'smallint',
+    1::integer AS 'integer',
+    1::bigint AS 'bigint',
+    1.1::decimal AS 'decimal',
+    1.1::numeric AS 'numeric',
+    1.1::real AS 'real',
+    1.1::double precision AS 'double',
+
+    -- Character Types
+    'text'::text AS 'text',
+    'varchar'::varchar(50) AS 'varchar',
+    'char'::char(10) AS 'char',
+
+    -- Date/Time Types
+    now()::timestamp AS 'timestamp',
+    now()::timestamp with time zone AS 'timestamptz',
+    CURRENT_DATE AS 'date',
+    CURRENT_TIME AS 'time',
+    CURRENT_TIME::time with time zone AS 'timetz',
+    interval '1 day' AS 'interval',
+
+    -- Boolean Type
+    true::boolean AS 'boolean',
+
+    -- Binary Types
+    '\x1234'::bytea AS 'bytea',
+
+    -- Arrays
+    ARRAY[1,2,3] AS 'integer_array',
+    ARRAY['a','b','c'] AS 'text_array',
+
+    -- JSON Types
+    '{"key": "value"}'::json AS 'JSON',
+
+    -- UUID Type
+    'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::uuid AS 'UUID'
+;`)
 const queryInput = ref<string>(query.value)
 const { error, errored, result } = useDuckDBQuery(query, { bundles: getViteBundles(), immediate: true })
 const resultArray = computed(() => result.value?.toArray().map(item => item.toJSON()) || [])
@@ -17,7 +56,15 @@ const columns = computed<ColumnDef<any>[]>(() => (result.value?.schema.fields.ma
     accessorKey: field.name,
     header: field.name,
     cell: ({ row }) => {
-      return h('span', {}, format(row.getValue(field.name), field))
+      try {
+        return h('span', {}, format(row.getValue(field.name), field))
+      }
+      catch (err) {
+        console.error(err, 'field:', field, 'value:', row.getValue(field.name))
+
+        errored.value = true
+        error.value = String(err)
+      }
     },
   }
 }) || []))
@@ -76,12 +123,13 @@ const table = computed(() => {
         </p>
       </div>
       <div>
-        <textarea
+        <BasicTextarea
           v-model="queryInput"
           bg="black/2 dark:white/5"
           border="1 solid black/10 dark:white/15"
           outline="none"
           w-full rounded p-2 font-mono
+          @submit="() => query = queryInput"
         />
       </div>
       <button
@@ -108,7 +156,7 @@ const table = computed(() => {
             <template v-if="table.getRowModel().rows?.length">
               <template v-for="row in table.getRowModel().rows" :key="row.id">
                 <TableRow :data-state="row.getIsSelected() && 'selected'">
-                  <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+                  <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id" text-nowrap>
                     <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                   </TableCell>
                 </TableRow>

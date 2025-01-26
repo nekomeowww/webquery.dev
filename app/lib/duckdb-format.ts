@@ -311,7 +311,7 @@ export function formatDatetime(date: number | Date, field?: Field): string {
   const timezone = field?.type?.timezone
   if (timezone) {
     datetime = datetime.withTimeZone(timezone)
-    return dateFormat(datetime, 'yyyy-MM-dd HH:mm:ssZ')
+    return dateFormat(datetime, 'yyyy-MM-dd HH:mm:ss OOOO')
   }
   // Return the timestamp without timezone information
   return dateFormat(datetime, 'yyyy-MM-dd HH:mm:ss')
