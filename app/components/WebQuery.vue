@@ -1,43 +1,24 @@
 <script setup lang="ts">
-import type {
-  ColumnDef,
-  ColumnFiltersState,
-  ExpandedState,
-  SortingState,
-  VisibilityState,
-} from '@tanstack/vue-table'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-
-import {
-  FlexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useVueTable,
-} from '@tanstack/vue-table'
-
+import type { ColumnDef, ColumnFiltersState, ExpandedState, SortingState, VisibilityState } from '@tanstack/vue-table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { FlexRender, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
 import { h, ref } from 'vue'
-import { getViteBundles } from '~/lib/duckdb-vite-bundles'
-import { useDuckDBQuery } from '../composables/duckdb'
 
-const query = ref<string>('SELECT * FROM generate_series(1, 100) t(v);')
+import { useDuckDBQuery } from '../composables/duckdb'
+import { format } from '../lib/duckdb-format'
+import { getViteBundles } from '../lib/duckdb-vite-bundles'
+
+const query = ref<string>('SELECT CURRENT_TIME;')
 const queryInput = ref<string>(query.value)
 const { error, errored, result } = useDuckDBQuery(query, { bundles: getViteBundles(), immediate: true })
-const resultArray = computed(() => result.value?.toArray().map(row => row.toJSON()) || [])
+const resultArray = computed(() => result.value?.toArray().map(item => item.toJSON()) || [])
 const columns = computed<ColumnDef<any>[]>(() => (result.value?.schema.fields.map((field) => {
   return {
     accessorKey: field.name,
     header: field.name,
-    cell: ({ row }) => h('span', {}, row.getValue(field.name)),
+    cell: ({ row }) => {
+      return h('span', {}, format(row.getValue(field.name), field))
+    },
   }
 }) || []))
 
@@ -113,11 +94,11 @@ const table = computed(() => {
         Run
       </button>
     </div>
-    <div text-center>
-      <div class="border rounded-md">
+    <div>
+      <div class="overflow-hidden border rounded-md">
         <Table>
           <TableHeader>
-            <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
+            <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id" bg="black/2 dark:white/5">
               <TableHead v-for="header in headerGroup.headers" :key="header.id">
                 <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext()" />
               </TableHead>

@@ -1,8 +1,18 @@
-version: '0.2'
+version: "0.2"
 ignorePaths: []
 dictionaryDefinitions: []
 dictionaries: []
 words:
   - duckdb
+  - heroicons
+  - iconify
+  - nuxi
+  - nuxt
+  - nuxtjs
+  - shadcn
+  - tanstack
+  - unocss
+  - vite
+  - vueuse
 ignoreWords: []
 import: []
