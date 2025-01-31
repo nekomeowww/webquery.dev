@@ -1,7 +1,7 @@
 {
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.1.0",
   "scripts": {
     "build": "nuxi build",
     "dev:pwa": "VITE_PLUGIN_PWA=true nuxi dev",
@@ -20,17 +20,18 @@
     "apache-arrow": "^19.0.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "es-toolkit": "^1.31.0",
+    "drizzle-orm": "^0.39.1",
+    "es-toolkit": "^1.32.0",
     "lucide-vue-next": "^0.474.0",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^3.0.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.16.0",
+    "@antfu/eslint-config": "^4.1.0",
     "@iconify-json/carbon": "^1.2.5",
     "@iconify-json/heroicons": "^1.2.2",
     "@iconify-json/twemoji": "^1.2.2",
     "@nuxt/devtools": "2.0.0-beta.3",
-    "@nuxt/eslint": "^0.7.5",
+    "@nuxt/eslint": "^1.0.0",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/tailwindcss": "^6.13.1",
     "@pinia/nuxt": "^0.9.0",
@@ -41,7 +42,7 @@
     "consola": "^3.4.0",
     "eslint": "^9.19.0",
     "eslint-plugin-format": "^1.0.1",
-    "nuxt": "^3.15.3",
+    "nuxt": "^3.15.4",
     "pinia": "^2.3.1",
     "shadcn-nuxt": "^0.11.3",
     "typescript": "^5.7.3",
