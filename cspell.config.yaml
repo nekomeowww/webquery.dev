@@ -14,5 +14,6 @@ words:
   - unocss
   - vite
   - vueuse
+  - webquery
 ignoreWords: []
 import: []

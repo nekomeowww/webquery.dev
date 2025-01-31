@@ -1,6 +1,7 @@
 import type { AsyncDuckDB, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm'
 
-import { connect, type ConnectOptions } from '../lib/duckdb'
+import type { ConnectOptions } from '../lib/duckdb'
+import { connect } from '../lib/duckdb'
 import { getViteBundles } from '../lib/duckdb-vite-bundles'
 
 export function useDuckDB(options?: ConnectOptions) {

@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@vite-pwa/nuxt',
-    '@nuxt/eslint',
     'shadcn-nuxt',
   ],
 
@@ -69,15 +68,6 @@ export default defineNuxtConfig({
       crawlLinks: false,
       routes: ['/'],
       ignore: ['/hi'],
-    },
-  },
-
-  eslint: {
-    config: {
-      standalone: false,
-      nuxt: {
-        sortConfigKeys: true,
-      },
     },
   },
 

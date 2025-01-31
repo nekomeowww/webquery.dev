@@ -1,4 +1,5 @@
 import type { Field, StructRow } from 'apache-arrow'
+import type { DataType } from './duckdb-types'
 import { TZDate } from '@date-fns/tz'
 import { Struct, TimeUnit, util } from 'apache-arrow'
 import {
@@ -16,11 +17,11 @@ import {
   fromUnixTime,
   setDay,
 } from 'date-fns'
-import { trimEnd } from 'es-toolkit'
 
+import { trimEnd } from 'es-toolkit'
 import { isNullOrUndefined, notNullOrUndefined } from './duckdb-common'
 import {
-  type DataType,
+
   isDatetimeType,
   isDateType,
   isDecimalType,

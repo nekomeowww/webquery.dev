@@ -3,7 +3,7 @@
     "*.css": "postcss"
   },
 
-  // Disable the default formatter, use eslint instead
+  // Disable the default formatter
   "prettier.enable": false,
   "editor.formatOnSave": false,
 
@@ -16,6 +16,7 @@
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
     { "rule": "style/*", "severity": "off" },
+    { "rule": "format/*", "severity": "off" },
     { "rule": "*-indent", "severity": "off" },
     { "rule": "*-spacing", "severity": "off" },
     { "rule": "*-spaces", "severity": "off" },
@@ -26,7 +27,10 @@
     { "rule": "*semi", "severity": "off" }
   ],
 
-  // Enable eslint for all supported languages
+  // The following is optional.
+  // It's better to put under project setting `.vscode/settings.json`
+  // to avoid conflicts with working with different eslint configs
+  // that does not support all formats.
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -39,6 +43,9 @@
     "jsonc",
     "yaml"
   ],
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+
   "interline-translate.knownPopularWordCount": 6000,
   "iconify.annotations": true,
   "iconify.inplace": true

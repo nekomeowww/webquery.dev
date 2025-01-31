@@ -1,4 +1,5 @@
-import { AsyncDuckDB, ConsoleLogger, type DuckDBBundles, selectBundle } from '@duckdb/duckdb-wasm'
+import type { DuckDBBundles } from '@duckdb/duckdb-wasm'
+import { AsyncDuckDB, ConsoleLogger, selectBundle } from '@duckdb/duckdb-wasm'
 import { defu } from 'defu'
 import { getBundles } from './duckdb-default-bundles'
 
