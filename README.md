@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/favicon.svg">
+  <img src="./apps/webquery-web/public/favicon.svg">
 </p>
 
 <h1 align="center">WebQuery.dev</h1>
