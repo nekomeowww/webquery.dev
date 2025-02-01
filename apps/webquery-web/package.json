@@ -20,7 +20,6 @@
     "apache-arrow": "^19.0.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "drizzle-orm": "^0.39.1",
     "es-toolkit": "^1.32.0",
     "lucide-vue-next": "^0.474.0",
     "tailwind-merge": "^3.0.1"
@@ -42,6 +41,6 @@
     "shadcn-nuxt": "^0.11.3",
     "unocss-preset-animations": "^1.1.1",
     "unocss-preset-shadcn": "^0.3.2",
-    "vue-tsc": "^2.2.0"
+    "vue-tsc": "^2.1.6"
   }
 }
