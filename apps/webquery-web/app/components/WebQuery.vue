@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { ColumnDef, ColumnFiltersState, ExpandedState, SortingState, VisibilityState } from '@tanstack/vue-table'
+import type { StructRow } from 'apache-arrow'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { FlexRender, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
-import { h, ref } from 'vue'
 
+import { h, ref } from 'vue'
 import { useDuckDBQuery } from '../composables/duckdb'
 import { format } from '../lib/duckdb-format'
 import { getViteBundles } from '../lib/duckdb-vite-bundles'
@@ -50,24 +51,26 @@ const query = ref<string>(`SELECT
 ;`)
 const queryInput = ref<string>(query.value)
 const { error, errored, result } = useDuckDBQuery(query, { bundles: getViteBundles(), immediate: true })
-const resultArray = computed(() => result.value?.toArray().map(item => item.toJSON()) || [])
-const columns = computed<ColumnDef<any>[]>(() => (result.value?.schema.fields.map((field) => {
-  return {
-    accessorKey: field.name,
-    header: field.name,
-    cell: ({ row }) => {
-      try {
-        return h('span', {}, format(row.getValue(field.name), field))
-      }
-      catch (err) {
-        console.error(err, 'field:', field, 'value:', row.getValue(field.name))
+const resultArray = computed(() => (result.value?.toArray() as StructRow[] || []).map(item => item.toJSON()))
+const columns = computed<ColumnDef<Record<string, unknown>>[]>(() => {
+  return result.value?.schema.fields.map((field) => {
+    return {
+      accessorKey: field.name,
+      header: field.name,
+      cell: ({ row }) => {
+        try {
+          return h('span', {}, format(row.getValue(field.name), field))
+        }
+        catch (err) {
+          console.error(err, 'field:', field, 'value:', row.getValue(field.name))
 
-        errored.value = true
-        error.value = String(err)
-      }
-    },
-  }
-}) || []))
+          errored.value = true
+          error.value = String(err)
+        }
+      },
+    }
+  }) || []
+})
 
 const sorting = ref<SortingState>([])
 const columnFilters = ref<ColumnFiltersState>([])
