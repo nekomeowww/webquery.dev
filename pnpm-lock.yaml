@@ -94,8 +94,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))
       shadcn-nuxt:
-        specifier: ^0.11.4
-        version: 0.11.4(magicast@0.3.5)(rollup@4.32.1)
+        specifier: ^1.0.2
+        version: 1.0.2(magicast@0.3.5)(rollup@4.32.1)
       unocss-preset-animations:
         specifier: ^1.1.1
         version: 1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(@unocss/webpack@66.0.0(webpack@5.97.1))(postcss@8.5.1)(vite@6.0.11(@types/node@22.12.0)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)))
@@ -5176,8 +5176,8 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shadcn-nuxt@0.11.4:
-    resolution: {integrity: sha512-9c5ZWUywJBJyRFxsPHP9FLaw3ZOVM2YfZc6FJ4ZEUVds6ynOCxOhn70JF+r0Fo0MsVAiGeKjL8lsRlG3Dg7XsA==}
+  shadcn-nuxt@1.0.2:
+    resolution: {integrity: sha512-snQmgrfW8LmAGTGRWBNS6vjAlu9eneiH32GtsFLxKkRFM7Wtm3nmT52W52eKTWT27LFsL4TaHgZ6J1AIetlFBQ==}
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -12345,7 +12345,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shadcn-nuxt@0.11.4(magicast@0.3.5)(rollup@4.32.1):
+  shadcn-nuxt@1.0.2(magicast@0.3.5)(rollup@4.32.1):
     dependencies:
       '@nuxt/kit': 3.15.4(magicast@0.3.5)(rollup@4.32.1)
       '@oxc-parser/wasm': 0.50.0
