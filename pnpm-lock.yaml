@@ -94,8 +94,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))
       shadcn-nuxt:
-        specifier: ^1.0.3
-        version: 1.0.3(magicast@0.3.5)
+        specifier: ^2.1.0
+        version: 2.1.0(magicast@0.3.5)
       unocss-preset-animations:
         specifier: ^1.1.1
         version: 1.1.1(@unocss/preset-wind@66.0.0)(unocss@66.0.0(@unocss/webpack@66.0.0(webpack@5.97.1))(postcss@8.5.3)(vite@6.2.4(@types/node@22.12.0)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2)))
@@ -5376,8 +5376,8 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shadcn-nuxt@1.0.3:
-    resolution: {integrity: sha512-Jf2yK5P7dtQHKUVWlMPByKvHBjgld76P1yCmYgx3XpmOK0mRpePxasHNWoau3wR1ReTWRNQzYVO9+A3sg5aNEA==}
+  shadcn-nuxt@2.1.0:
+    resolution: {integrity: sha512-Pm9gYOgyReVaj2SeBAvHCo6lcJ2J+bUFWOlCfa3ml8xJd54uHtige4wdG0kJifutabCIKPu6Y+Ik+l94VR3GXQ==}
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -6601,7 +6601,7 @@ snapshots:
     dependencies:
       '@babel/template': 7.25.9
       '@babel/traverse': 7.26.7
-      '@babel/types': 7.26.7
+      '@babel/types': 7.27.0
     transitivePeerDependencies:
       - supports-color
 
@@ -7088,7 +7088,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.26.7
       '@babel/helper-plugin-utils': 7.26.5
-      '@babel/types': 7.26.7
+      '@babel/types': 7.27.0
       esutils: 2.0.3
 
   '@babel/runtime@7.26.7':
@@ -8258,7 +8258,7 @@ snapshots:
   '@types/eslint-scope@3.7.7':
     dependencies:
       '@types/eslint': 9.6.1
-      '@types/estree': 1.0.6
+      '@types/estree': 1.0.7
 
   '@types/eslint@9.6.1':
     dependencies:
@@ -12541,9 +12541,9 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shadcn-nuxt@1.0.3(magicast@0.3.5):
+  shadcn-nuxt@2.1.0(magicast@0.3.5):
     dependencies:
-      '@nuxt/kit': 3.16.1(magicast@0.3.5)
+      '@nuxt/kit': 3.16.2(magicast@0.3.5)
       '@oxc-parser/wasm': 0.50.0
       typescript: 5.6.3
     transitivePeerDependencies:
@@ -13479,7 +13479,7 @@ snapshots:
   webpack@5.97.1:
     dependencies:
       '@types/eslint-scope': 3.7.7
-      '@types/estree': 1.0.6
+      '@types/estree': 1.0.7
       '@webassemblyjs/ast': 1.14.1
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
