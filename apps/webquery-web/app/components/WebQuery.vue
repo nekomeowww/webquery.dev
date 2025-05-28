@@ -1,10 +1,34 @@
 <script setup lang="ts">
-import type { CellContext, ColumnDef, ColumnFiltersState, ColumnResizeMode, ColumnSizingState, ExpandedState, SortingState, VisibilityState } from '@tanstack/vue-table'
+import type {
+  CellContext,
+  ColumnDef,
+  ColumnFiltersState,
+  ColumnResizeMode,
+  ColumnSizingState,
+  ExpandedState,
+  SortingState,
+  VisibilityState,
+} from '@tanstack/vue-table'
+
 import { getImportUrlBundles } from '@proj-airi/duckdb-wasm/bundles/import-url-browser'
 
-import { FlexRender, getCoreRowModel, getExpandedRowModel, getFilteredRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
+import {
+  FlexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  useVueTable,
+} from '@tanstack/vue-table'
 import { h, ref } from 'vue'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { useDuckDBQuery } from '../composables/duckdb'
 import { valueUpdater } from '../libs/shadcn/utils'
 import BasicTextarea from './BasicTextarea.vue'
@@ -50,7 +74,7 @@ const query = ref<string>(`SELECT
 ;`)
 
 const queryInput = ref<string>(query.value)
-const { error, errored, result, resultColumns } = useDuckDBQuery(query, { bundles: getImportUrlBundles(), immediate: true, autoConnect: true, logger: true })
+const { error, errored, result, resultColumns, connecting, querying } = useDuckDBQuery(query, { bundles: getImportUrlBundles(), immediate: true, autoConnect: true, logger: true })
 
 // Add column resizing state
 const columnSizing = ref<ColumnSizingState>({})
@@ -141,117 +165,125 @@ const columnSizeVars = computed(() => {
 </script>
 
 <template>
-  <div flex flex-col gap-4 text-left>
-    <h1 flex items-center gap-2 font-mono>
-      <div i-heroicons:command-line-solid text="indigo-600 dark:indigo-300" text-2xl />
-      <span text-xl>WebQuery</span>
-    </h1>
-    <div flex flex-col gap-2>
-      <div
-        v-if="errored"
-        bg="red/5 dark:red-300/15"
-        border="1 solid red/60 dark:red-300/50"
-        outline="none"
-        w-full whitespace-pre-line rounded p-2 font-mono
-      >
-        {{ error }}
-      </div>
-      <div
-        v-else
-        bg="green/5 dark:green-300/15"
-        border="1 solid green/60 dark:green-300/50"
-        outline="none"
-        w-full rounded p-2 font-mono
-      >
-        <p>
-          OK
-        </p>
-      </div>
-      <div>
-        <BasicTextarea
-          v-model="queryInput"
-          bg="black/2 dark:white/5"
-          border="1 solid black/10 dark:white/15"
+  <div h-full w-full>
+    <div v-if="connecting" class="h-full flex items-center justify-center">
+      <div i-svg-spinners:270-ring />
+    </div>
+    <div v-else flex flex-col gap-4 text-left>
+      <h1 flex items-center gap-2 font-mono>
+        <div i-heroicons:command-line-solid text="indigo-600 dark:indigo-300" text-2xl />
+        <span text-xl>WebQuery</span>
+      </h1>
+      <div flex flex-col gap-2>
+        <div
+          v-if="errored"
+          bg="red/5 dark:red-300/15"
+          border="1 solid red/60 dark:red-300/50"
+          outline="none"
+          w-full whitespace-pre-line rounded p-2 font-mono
+        >
+          {{ error }}
+        </div>
+        <div
+          v-else
+          bg="green/5 dark:green-300/15"
+          border="1 solid green/60 dark:green-300/50"
           outline="none"
           w-full rounded p-2 font-mono
-          @submit="() => query = queryInput"
-        />
+        >
+          <p>
+            OK
+          </p>
+        </div>
+        <div>
+          <BasicTextarea
+            v-model="queryInput"
+            bg="black/2 dark:white/5"
+            border="1 solid black/10 dark:white/15"
+            outline="none"
+            w-full rounded p-2 font-mono
+            @submit="() => query = queryInput"
+          />
+        </div>
+        <button
+          bg="indigo-50 dark:indigo-900"
+          border="1 solid indigo-600 dark:indigo-300"
+          text="black dark:white xs"
+          w-fit rounded px-2 py-1
+          @click="() => query = queryInput"
+        >
+          Run
+        </button>
       </div>
-      <button
-        bg="indigo-50 dark:indigo-900"
-        border="1 solid indigo-600 dark:indigo-300"
-        text="black dark:white xs"
-        w-fit rounded px-2 py-1
-        @click="() => query = queryInput"
-      >
-        Run
-      </button>
-    </div>
-    <div>
-      <!-- Table -->
-      <div class="w-full flex-1 border rounded-md">
-        <Table :style="columnSizeVars" class="w-full table-fixed">
-          <TableHeader>
-            <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id" class="relative" bg="black/2 dark:white/5">
-              <TableHead
-                v-for="header in headerGroup.headers"
-                :key="header.id"
-                :style="{
-                  width: `var(--header-${header.id}-size)`,
-                  position: 'relative',
-                }"
-                :colspan="header.colSpan"
-                :data-column-id="header.column.id"
-                class="relative select-none"
-              >
-                <div class="flex items-center justify-between gap-2">
-                  <div v-if="!header.isPlaceholder" class="truncate">
-                    <FlexRender :render="header.column.columnDef.header" :props="header.getContext()" />
-                  </div>
-
-                  <!-- Column resize handle -->
-                  <div
-                    v-if="header.column.getCanResize()" class="resizer"
-                    :class="{ isResizing: header.column.getIsResizing() }"
-                    @dblclick="header.column.resetSize()"
-                    @mousedown="header.getResizeHandler()?.($event)"
-                    @touchstart="header.getResizeHandler()?.($event)"
-                  />
-                </div>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <template v-if="table.getRowModel().rows?.length">
-              <template v-for="row in table.getRowModel().rows" :key="row.id">
-                <TableRow
-                  :data-state="row.getIsSelected() && 'selected'"
-                  class="w-full"
+      <div>
+        <div v-if="querying" class="h-24 flex items-center justify-center">
+          <div i-svg-spinners:270-ring />
+        </div>
+        <!-- Table -->
+        <div v-else class="w-full flex-1 border rounded-md">
+          <Table :style="columnSizeVars" class="w-full table-fixed">
+            <TableHeader>
+              <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id" class="relative" bg="black/2 dark:white/5">
+                <TableHead
+                  v-for="header in headerGroup.headers"
+                  :key="header.id"
+                  :style="{
+                    width: `var(--header-${header.id}-size)`,
+                    position: 'relative',
+                  }"
+                  :colspan="header.colSpan"
+                  :data-column-id="header.column.id"
+                  class="relative select-none"
                 >
-                  <TableCell
-                    v-for="cell in row.getVisibleCells()" :key="cell.id"
-                    :style="{ width: `var(--col-${cell.column.id}-size)` }"
-                    :data-column-id="cell.column.id"
-                    class="truncate"
-                  >
-                    <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-                  </TableCell>
-                </TableRow>
-                <TableRow v-if="row.getIsExpanded()">
-                  <TableCell :colspan="row.getAllCells().length">
-                    {{ JSON.stringify(row.original) }}
-                  </TableCell>
-                </TableRow>
-              </template>
-            </template>
+                  <div class="flex items-center justify-between gap-2">
+                    <div v-if="!header.isPlaceholder" class="truncate">
+                      <FlexRender :render="header.column.columnDef.header" :props="header.getContext()" />
+                    </div>
 
-            <TableRow v-else>
-              <TableCell :colspan="columns.length" class="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+                    <!-- Column resize handle -->
+                    <div
+                      v-if="header.column.getCanResize()" class="resizer"
+                      :class="{ isResizing: header.column.getIsResizing() }"
+                      @dblclick="header.column.resetSize()"
+                      @mousedown="header.getResizeHandler()?.($event)"
+                      @touchstart="header.getResizeHandler()?.($event)"
+                    />
+                  </div>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <template v-if="table.getRowModel().rows?.length">
+                <template v-for="row in table.getRowModel().rows" :key="row.id">
+                  <TableRow
+                    :data-state="row.getIsSelected() && 'selected'"
+                    class="w-full"
+                  >
+                    <TableCell
+                      v-for="cell in row.getVisibleCells()" :key="cell.id"
+                      :style="{ width: `var(--col-${cell.column.id}-size)` }"
+                      :data-column-id="cell.column.id"
+                      class="truncate"
+                    >
+                      <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow v-if="row.getIsExpanded()">
+                    <TableCell :colspan="row.getAllCells().length">
+                      {{ JSON.stringify(row.original) }}
+                    </TableCell>
+                  </TableRow>
+                </template>
+              </template>
+
+              <TableRow v-else>
+                <TableCell :colspan="columns.length" class="h-24 text-center">
+                  No results.
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   </div>

@@ -6,15 +6,34 @@ import { connect as duckdbConnect, mapStructRowData } from '@proj-airi/duckdb-wa
 import { onMounted, onUnmounted, ref, toValue, watch } from 'vue'
 
 export function useDuckDB(options?: ConnectOptions & { autoConnect?: boolean }) {
+  const connecting = ref(false)
   const db = ref<DuckDBWasmClient>()
   const closeFunc = ref<() => Promise<void>>(async () => { })
+  const errored = ref<boolean>(false)
+  const error = ref<unknown>()
 
   async function connect() {
-    const client = await duckdbConnect({ ...options })
-    db.value = client
+    connecting.value = true
 
-    closeFunc.value = async () => {
-      client?.close()
+    try {
+      const client = await duckdbConnect({ ...options })
+      db.value = client
+
+      closeFunc.value = async () => {
+        client?.close()
+      }
+    }
+    catch (err) {
+      console.error('Error connecting to DuckDB:', err)
+
+      errored.value = true
+      error.value = err
+
+      db.value = undefined
+      closeFunc.value = async () => { }
+    }
+    finally {
+      connecting.value = false
     }
   }
 
@@ -31,6 +50,9 @@ export function useDuckDB(options?: ConnectOptions & { autoConnect?: boolean }) 
   return {
     connect,
     db,
+    connecting,
+    errored,
+    error,
   }
 }
 
@@ -39,11 +61,12 @@ export function useDuckDBQuery(queryStr: MaybeRefOrGetter<string>, options?: { a
   const resultColumns = ref<Field[]>([])
   const errored = ref<boolean>(false)
   const error = ref<unknown>()
+  const querying = ref(false)
 
-  const duckDB = useDuckDB(options)
+  const { db, connecting, error: dbError, errored: dbErrored } = useDuckDB(options)
 
   async function _query(query: string, params: unknown[] = []): Promise<{ data: Record<string, unknown>[], columns: any[] }> {
-    const conn = duckDB.db.value?.conn
+    const conn = db.value?.conn
     if (!conn) {
       return {
         data: [],
@@ -72,6 +95,8 @@ export function useDuckDBQuery(queryStr: MaybeRefOrGetter<string>, options?: { a
   }
 
   async function query() {
+    querying.value = true
+
     try {
       const results = await _query(toValue(queryStr))
 
@@ -85,13 +110,28 @@ export function useDuckDBQuery(queryStr: MaybeRefOrGetter<string>, options?: { a
       errored.value = true
       error.value = err
     }
+    finally {
+      querying.value = false
+    }
   }
 
   onMounted(async () => options?.immediate && await query())
   watch(() => toValue(queryStr), () => query())
-  watch(duckDB.db, async (newDb) => {
+  watch(db, async (newDb) => {
     if (newDb && options?.immediate) {
       await query()
+    }
+  })
+  watch(dbError, (newError) => {
+    if (newError) {
+      errored.value = true
+      error.value = newError
+    }
+  })
+  watch(dbErrored, (newErrored) => {
+    if (newErrored) {
+      errored.value = true
+      error.value = dbError.value
     }
   })
 
@@ -101,5 +141,7 @@ export function useDuckDBQuery(queryStr: MaybeRefOrGetter<string>, options?: { a
     error,
     errored,
     execute: query,
+    querying,
+    connecting,
   }
 }

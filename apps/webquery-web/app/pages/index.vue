@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <div>
+  <div h-full w-full>
     <ClientOnly>
       <WebQuery />
     </ClientOnly>
