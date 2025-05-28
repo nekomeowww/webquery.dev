@@ -11,6 +11,14 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
   ],
 
+  vite: {
+    optimizeDeps: {
+      exclude: [
+        '@proj-airi/duckdb-wasm',
+      ],
+    },
+  },
+
   devtools: {
     enabled: true,
   },

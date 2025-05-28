@@ -2,7 +2,7 @@
   "name": "webquery-dev",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@10.10.0",
+  "packageManager": "pnpm@10.11.0",
   "scripts": {
     "dev": "pnpm packages:dev",
     "build": "pnpm packages:build",
@@ -16,9 +16,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@antfu/eslint-config": "^4.12.0",
-    "@unocss/eslint-config": "^66.0.0",
-    "eslint": "^9.25.1",
+    "@antfu/eslint-config": "^4.13.2",
+    "@unocss/eslint-config": "^66.1.2",
+    "eslint": "^9.27.0",
     "eslint-plugin-format": "^1.0.1",
     "typescript": "^5.8.3"
   }
