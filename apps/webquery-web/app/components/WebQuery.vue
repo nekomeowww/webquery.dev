@@ -95,7 +95,7 @@ const columns = computed<ColumnDef<Record<string, unknown>>[]>(() => {
       accessorKey: column.name,
       header: () => h('span', {}, column.name),
       cell: (cellProps: CellContext<Record<string, unknown>, unknown>) => {
-        const value = cellProps.row.getValue(key) as string | number | boolean
+        const value = cellProps.row.getValue(column.name) as string | number | boolean
         if (Array.isArray(value)) {
           return h('span', {}, JSON.stringify(toRaw(value)))
         }
