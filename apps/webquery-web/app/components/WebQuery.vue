@@ -95,12 +95,12 @@ const columns = computed<ColumnDef<Record<string, unknown>>[]>(() => {
       accessorKey: column.name,
       header: () => h('span', {}, column.name),
       cell: (cellProps: CellContext<Record<string, unknown>, unknown>) => {
-        const value = cellProps.row.getValue(column.name)
+        const value = cellProps.row.getValue(key) as string | number | boolean
         if (Array.isArray(value)) {
           return h('span', {}, JSON.stringify(toRaw(value)))
         }
 
-        return h('span', {}, cellProps.row.getValue(column.name))
+        return h('span', {}, value)
       },
       size: DEFAULT_COLUMN_WIDTH,
       minSize: 60,
