@@ -13,6 +13,7 @@ words:
   - shadcn
   - tanstack
   - unocss
+  - unref
   - vite
   - vueuse
   - webquery

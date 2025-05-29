@@ -90,11 +90,18 @@ const expanded = ref<ExpandedState>({})
 const DEFAULT_COLUMN_WIDTH = 150
 
 const columns = computed<ColumnDef<Record<string, unknown>>[]>(() => {
-  const fields = resultColumns.value.map((column) => {
+  const fields = toValue(resultColumns).map((column) => {
     return {
       accessorKey: column.name,
       header: () => h('span', {}, column.name),
-      cell: (cellProps: CellContext<Record<string, unknown>, unknown>) => h('span', {}, cellProps.row.getValue(column.name)),
+      cell: (cellProps: CellContext<Record<string, unknown>, unknown>) => {
+        const value = cellProps.row.getValue(column.name)
+        if (Array.isArray(value)) {
+          return h('span', {}, JSON.stringify(toRaw(value)))
+        }
+
+        return h('span', {}, cellProps.row.getValue(column.name))
+      },
       size: DEFAULT_COLUMN_WIDTH,
       minSize: 60,
       maxSize: 800,
@@ -266,11 +273,6 @@ const columnSizeVars = computed(() => {
                       class="truncate"
                     >
                       <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow v-if="row.getIsExpanded()">
-                    <TableCell :colspan="row.getAllCells().length">
-                      {{ JSON.stringify(row.original) }}
                     </TableCell>
                   </TableRow>
                 </template>
