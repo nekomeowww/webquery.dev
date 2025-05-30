@@ -4,22 +4,32 @@
   "private": true,
   "packageManager": "pnpm@10.11.0",
   "scripts": {
-    "dev": "pnpm packages:dev",
+    "stub:packages": "pnpm -r --filter '@webquery-dev/*' run stub",
+    "dev": "pnpm dev:packages",
+    "dev:packages": "pnpm -r --filter '@webquery-dev/*' --parallel run dev",
     "build": "pnpm packages:build",
-    "packages:dev": "pnpm -r --filter '@webquery-dev/*' --parallel run dev",
-    "packages:build": "pnpm -r --filter '@webquery-dev/*' run build",
-    "packages:stub": "pnpm -r --filter '@webquery-dev/*' run stub",
-    "packages:publish": "pnpm -r --filter '@webquery-dev/*' run package:publish",
+    "build:packages": "pnpm -r --filter '@webquery-dev/*' run build",
+    "publish:packages": "pnpm -r --filter '@webquery-dev/*' run package:publish",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "typecheck": "pnpm -r --filter '@webquery-dev/*' --parallel run typecheck"
+    "typecheck": "pnpm -r --filter '@webquery-dev/*' --parallel run typecheck",
+    "up": "taze -w -r -I -f && pnpm prune && pnpm dedupe"
   },
   "dependencies": {},
   "devDependencies": {
     "@antfu/eslint-config": "^4.13.2",
     "@unocss/eslint-config": "^66.1.2",
+    "@unocss/eslint-plugin": "^66.1.2",
+    "bumpp": "^10.1.1",
     "eslint": "^9.27.0",
     "eslint-plugin-format": "^1.0.1",
-    "typescript": "^5.8.3"
+    "rollup": "^4.41.1",
+    "taze": "^19.1.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "unocss": "66.1.1",
+    "vite": "^6.3.5",
+    "vite-plugin-inspect": "^11.1.0",
+    "vitest": "^3.1.4"
   }
 }

@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
-    "@proj-airi/duckdb-wasm": "^0.4.24",
+    "@proj-airi/duckdb-wasm": "^0.4.26",
     "@tanstack/vue-table": "^8.21.3",
     "apache-arrow": "^20.0.0",
     "clsx": "^2.1.1",

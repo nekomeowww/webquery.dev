@@ -1,8 +1,8 @@
-import type { ConnectOptions, DuckDBWasmClient } from '@proj-airi/duckdb-wasm'
+import type { ConnectOptions, DuckDBWasmClient, ResultColumns } from '@proj-airi/duckdb-wasm'
 import type { Field } from 'apache-arrow'
 
 import type { MaybeRefOrGetter } from 'vue'
-import { connect as duckdbConnect, mapStructRowData } from '@proj-airi/duckdb-wasm'
+import { connect as duckdbConnect } from '@proj-airi/duckdb-wasm'
 import { onMounted, onUnmounted, ref, toValue, watch } from 'vue'
 
 export function useDuckDB(options?: ConnectOptions & { autoConnect?: boolean }) {
@@ -65,33 +65,17 @@ export function useDuckDBQuery(queryStr: MaybeRefOrGetter<string>, options?: { a
 
   const { db, connecting, error: dbError, errored: dbErrored } = useDuckDB(options)
 
-  async function _query(query: string, params: unknown[] = []): Promise<{ data: Record<string, unknown>[], columns: any[] }> {
-    const conn = db.value?.conn
-    if (!conn) {
+  async function _query(query: string, params: unknown[] = []): Promise<ResultColumns> {
+    if (!db.value) {
       return {
-        data: [],
+        rows: [],
         columns: [],
+        _results: undefined as any,
+        _schema: undefined as any,
       }
     }
 
-    if (!params || params.length === 0) {
-      const results = await conn.query(query)
-      return {
-        data: mapStructRowData(results),
-        columns: results.schema.fields,
-      }
-    }
-
-    const stmt = await conn.prepare(query)
-    const results = await stmt.query(...params)
-
-    const rows = mapStructRowData(results)
-    stmt.close()
-
-    return {
-      data: rows,
-      columns: results.schema.fields,
-    }
+    return await db.value!.queryWithColumns(query, params)
   }
 
   async function query() {
@@ -103,7 +87,7 @@ export function useDuckDBQuery(queryStr: MaybeRefOrGetter<string>, options?: { a
       errored.value = false
       error.value = undefined
 
-      result.value = results.data
+      result.value = results.rows
       resultColumns.value = results.columns
     }
     catch (err) {

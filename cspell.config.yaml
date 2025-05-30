@@ -4,6 +4,7 @@ dictionaryDefinitions: []
 dictionaries: []
 words:
   - airi
+  - bumpp
   - duckdb
   - heroicons
   - iconify
@@ -12,6 +13,7 @@ words:
   - nuxtjs
   - shadcn
   - tanstack
+  - taze
   - unocss
   - unref
   - vite
