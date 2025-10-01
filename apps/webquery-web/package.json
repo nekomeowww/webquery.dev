@@ -17,7 +17,7 @@
     "@date-fns/tz": "^1.2.0",
     "@proj-airi/duckdb-wasm": "^0.4.26",
     "@tanstack/vue-table": "^8.21.3",
-    "apache-arrow": "^20.0.0",
+    "apache-arrow": "^21.0.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.38.0",
