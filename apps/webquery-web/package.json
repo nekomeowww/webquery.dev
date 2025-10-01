@@ -41,7 +41,7 @@
     "pinia": "^3.0.2",
     "shadcn-nuxt": "^2.2.0",
     "unocss-preset-animations": "^1.2.1",
-    "unocss-preset-shadcn": "^0.5.0",
+    "unocss-preset-shadcn": "^1.0.1",
     "vue-tsc": "^2.2.10"
   }
 }
