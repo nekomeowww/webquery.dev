@@ -17,7 +17,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@antfu/eslint-config": "^5.4.1",
+    "@antfu/eslint-config": "^6.2.0",
     "@unocss/eslint-config": "^66.5.4",
     "@unocss/eslint-plugin": "^66.5.4",
     "bumpp": "^10.3.1",
