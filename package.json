@@ -27,7 +27,7 @@
     "taze": "^19.9.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "unocss": "66.5.4",
+    "unocss": "66.5.10",
     "vite": "^7.1.12",
     "vite-plugin-inspect": "^11.3.3",
     "vitest": "^4.0.6"
