@@ -17,19 +17,19 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@antfu/eslint-config": "^6.2.0",
-    "@unocss/eslint-config": "^66.5.4",
-    "@unocss/eslint-plugin": "^66.5.4",
-    "bumpp": "^10.3.1",
-    "eslint": "^9.39.0",
-    "eslint-plugin-format": "^1.0.2",
-    "rollup": "^4.52.5",
-    "taze": "^19.9.0",
-    "tsx": "^4.20.6",
+    "@antfu/eslint-config": "^6.5.1",
+    "@unocss/eslint-config": "^66.5.10",
+    "@unocss/eslint-plugin": "^66.5.10",
+    "bumpp": "^10.3.2",
+    "eslint": "^9.39.1",
+    "eslint-plugin-format": "^1.1.0",
+    "rollup": "^4.53.3",
+    "taze": "^19.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "unocss": "66.5.10",
-    "vite": "^7.1.12",
+    "vite": "^7.2.7",
     "vite-plugin-inspect": "^11.3.3",
-    "vitest": "^4.0.6"
+    "vitest": "^4.0.15"
   }
 }
