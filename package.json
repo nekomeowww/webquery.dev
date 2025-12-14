@@ -17,11 +17,11 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@antfu/eslint-config": "^6.5.1",
+    "@antfu/eslint-config": "^6.7.0",
     "@unocss/eslint-config": "^66.5.10",
     "@unocss/eslint-plugin": "^66.5.10",
     "bumpp": "^10.3.2",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "eslint-plugin-format": "^1.1.0",
     "rollup": "^4.53.3",
     "taze": "^19.9.2",
