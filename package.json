@@ -18,8 +18,8 @@
   "dependencies": {},
   "devDependencies": {
     "@antfu/eslint-config": "^6.7.3",
-    "@unocss/eslint-config": "^66.5.11",
-    "@unocss/eslint-plugin": "^66.5.11",
+    "@unocss/eslint-config": "^66.5.12",
+    "@unocss/eslint-plugin": "^66.5.12",
     "bumpp": "^10.3.2",
     "eslint": "^9.39.2",
     "eslint-plugin-format": "^1.1.0",
