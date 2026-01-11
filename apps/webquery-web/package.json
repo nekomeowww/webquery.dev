@@ -42,6 +42,6 @@
     "shadcn-nuxt": "^2.4.3",
     "unocss-preset-animations": "^1.3.0",
     "unocss-preset-shadcn": "^1.0.1",
-    "vue-tsc": "^3.2.1"
+    "vue-tsc": "^3.2.2"
   }
 }
