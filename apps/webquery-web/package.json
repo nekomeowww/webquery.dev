@@ -21,7 +21,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.44.0",
-    "lucide-vue-next": "^0.562.0",
+    "lucide-vue-next": "^0.563.0",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
