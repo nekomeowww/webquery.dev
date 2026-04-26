@@ -57,8 +57,8 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       '@proj-airi/duckdb-wasm':
-        specifier: ^0.4.29
-        version: 0.4.29(drizzle-orm@0.39.1)
+        specifier: ^0.5.0
+        version: 0.5.0(drizzle-orm@0.39.1)
       '@tanstack/vue-table':
         specifier: ^8.21.3
         version: 8.21.3(vue@3.5.27(typescript@6.0.2))
@@ -2447,8 +2447,8 @@ packages:
   '@poppinss/exception@1.2.2':
     resolution: {integrity: sha512-m7bpKCD4QMlFCjA/nKTs23fuvoVFoA83brRKmObCUNmi/9tVu8Ve3w4YQAnJu4q3Tjf5fr685HYIC/IA2zHRSg==}
 
-  '@proj-airi/duckdb-wasm@0.4.29':
-    resolution: {integrity: sha512-NWpUHLgzzvTftRYr1vHePHUFjt0LbYM6DbHHI0hI94Y0c+7QezNgIoYasWp9XhZS4dEBm3J2efiH2LqbMayNaA==}
+  '@proj-airi/duckdb-wasm@0.5.0':
+    resolution: {integrity: sha512-kI29wDhmgWXQ7dpbBNA2bSK/S4RXBO54hRqOQR8SQPnQB8F2010leUmvdf7kjtFgvIacfAMc0L1BxaOMmnA7ig==}
     peerDependencies:
       drizzle-orm: '>=0.40.0'
       web-worker: ^1.5.0
@@ -4205,6 +4205,9 @@ packages:
   defu@6.1.4:
     resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
 
+  defu@6.1.7:
+    resolution: {integrity: sha512-7z22QmUWiQ/2d0KkdYmANbRUVABpZ9SNYyH5vx6PZ+nE5bcC0l7uFvEfHlyld/HcGBFTL536ClDt3DEcSlEJAQ==}
+
   denque@2.1.0:
     resolution: {integrity: sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==}
     engines: {node: '>=0.10'}
@@ -4457,6 +4460,9 @@ packages:
 
   es-toolkit@1.44.0:
     resolution: {integrity: sha512-6penXeZalaV88MM3cGkFZZfOoLGWshWWfdy0tWw/RlVVyhvMaWSBTOvXNeiW3e5FwdS5ePW0LGEu17zT139ktg==}
+
+  es-toolkit@1.46.0:
+    resolution: {integrity: sha512-IToJ6ct9OLl5zz6WsC/1vZEwfSZ7Myil+ygl5Tf30Xjn9AEkzNB4kqp2G7VUJKF1DtTx/ra5M5KLlXvzOg51BA==}
 
   esbuild@0.27.1:
     resolution: {integrity: sha512-yY35KZckJJuVVPXpvjgxiCuVEJT67F6zDeVTv4rizyPrfGBUpZQsvmxnN+C371c2esD/hNMjj4tpBhuueLN7aA==}
@@ -10074,16 +10080,16 @@ snapshots:
 
   '@poppinss/exception@1.2.2': {}
 
-  '@proj-airi/duckdb-wasm@0.4.29(drizzle-orm@0.39.1)':
+  '@proj-airi/duckdb-wasm@0.5.0(drizzle-orm@0.39.1)':
     dependencies:
       '@date-fns/tz': 1.4.1
       '@duckdb/duckdb-wasm': 1.29.1-dev68.0
       '@moeru/std': 0.1.0-beta.1
       apache-arrow: 21.1.0
       date-fns: 4.1.0
-      defu: 6.1.4
+      defu: 6.1.7
       drizzle-orm: 0.39.1
-      es-toolkit: 1.44.0
+      es-toolkit: 1.46.0
     transitivePeerDependencies:
       - '@75lb/nature'
 
@@ -12106,6 +12112,8 @@ snapshots:
 
   defu@6.1.4: {}
 
+  defu@6.1.7: {}
+
   denque@2.1.0: {}
 
   depd@2.0.0: {}
@@ -12291,6 +12299,8 @@ snapshots:
       is-symbol: 1.1.1
 
   es-toolkit@1.44.0: {}
+
+  es-toolkit@1.46.0: {}
 
   esbuild@0.27.1:
     optionalDependencies:
