@@ -26,7 +26,7 @@
     "rollup": "^4.58.0",
     "taze": "^19.9.2",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.2",
+    "typescript": "^7.0.2",
     "unocss": "66.7.5",
     "vite": "^8.0.0",
     "vite-plugin-inspect": "^12.0.2",
