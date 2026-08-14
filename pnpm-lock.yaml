@@ -57,8 +57,8 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       '@proj-airi/duckdb-wasm':
-        specifier: ^0.5.0
-        version: 0.5.0(drizzle-orm@0.39.1)
+        specifier: ^0.6.0
+        version: 0.6.0(drizzle-orm@0.39.1)
       '@tanstack/vue-table':
         specifier: ^8.21.3
         version: 8.21.3(vue@3.5.41(typescript@6.0.3))
@@ -811,6 +811,9 @@ packages:
 
   '@date-fns/tz@1.4.1':
     resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
+
+  '@date-fns/tz@1.5.0':
+    resolution: {integrity: sha512-lwYN/vDPeNRULcepoE/LO2Pgx+7/RV+S9ARfbc9lr2DtGkOD7pAiruHvbR1RX3Qyf6ja47EWJDMsNK5vK08DJg==}
 
   '@devframes/hub@0.6.2':
     resolution: {integrity: sha512-UAlfCYRP2LYmv3D/eiltJGUMiZIRtimNHUfBnx9CRL3FqEGbPUyA9yDaXdnFu9isg5kXkWoE3pQ78xYEW8Mu5Q==}
@@ -1969,8 +1972,8 @@ packages:
   '@poppinss/exception@1.2.3':
     resolution: {integrity: sha512-dCED+QRChTVatE9ibtoaxc+WkdzOSjYTKi/+uacHWIsfodVfpsueo3+DKpgU5Px8qXjgmXkSvhXvSCz3fnP9lw==}
 
-  '@proj-airi/duckdb-wasm@0.5.0':
-    resolution: {integrity: sha512-kI29wDhmgWXQ7dpbBNA2bSK/S4RXBO54hRqOQR8SQPnQB8F2010leUmvdf7kjtFgvIacfAMc0L1BxaOMmnA7ig==}
+  '@proj-airi/duckdb-wasm@0.6.0':
+    resolution: {integrity: sha512-9a2szJCVJavFmaNErBE5D3xsOtioNYkgzFzbSEE9T7t7RtpbsrsdBEaE8LdTm1gWslDqoPKK7Fkeku4oMoPzUA==}
     peerDependencies:
       drizzle-orm: '>=0.40.0'
       web-worker: ^1.5.0
@@ -2754,6 +2757,9 @@ packages:
   '@types/node@24.9.1':
     resolution: {integrity: sha512-QoiaXANRkSXK6p0Duvt56W208du4P9Uye9hWLWgGMDTEoKPhuenzNcC4vGUmrNkiOKTlIrBoyNQYNpSwfEZXSg==}
 
+  '@types/node@25.9.5':
+    resolution: {integrity: sha512-OScDchr2fwuUmWdf4kZ9h7PcJiYDVInhJizG/biAq3cAvqwYktuy/TYGGdZNMtNTFUP7rnb0NU4TUdm82kt4Rg==}
+
   '@types/node@26.2.0':
     resolution: {integrity: sha512-5IviulTZeRNp2vAJ514cc/HUlY5nZ9fCbq9DMyC52BrhFZACo3nI0R7qBxhQmo/d27NFe96ur/b7Wwxklda+kg==}
 
@@ -3469,6 +3475,10 @@ packages:
     resolution: {integrity: sha512-kQrYLxhC+NTVVZ4CCzGF6L/uPVOzJmD1T3XgbiUnP7oTeVFOFgEUu6IKNwCDkpFoBVqDKQivlX4RUFqqnWFlEA==}
     hasBin: true
 
+  apache-arrow@21.2.0:
+    resolution: {integrity: sha512-Hxe6Agq26gQOM954qpzYSllJBPJl+e16U5CkfuMUhLrNba+5nKkttIVlflaovN6oaTratqMGAO8H5u/aNhmHWQ==}
+    hasBin: true
+
   archiver-utils@5.0.2:
     resolution: {integrity: sha512-wuLJMmIBQYCsGZgYLTy5FIB2pF6Lfb6cXMSF8Qywwk3t20zWnAi7zLcQFdKQmIB8wyZpY5ER38x08GbwtR2cLA==}
     engines: {node: '>= 14'}
@@ -3977,6 +3987,9 @@ packages:
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
+  date-fns@4.4.0:
+    resolution: {integrity: sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w==}
+
   db0@0.3.4:
     resolution: {integrity: sha512-RiXXi4WaNzPTHEOu8UPQKMooIbqOEyqA1t7Z6MsdxSCeb8iUC9ko3LcmsLmeUt2SM5bctfArZKkRQggKZz7JNw==}
     peerDependencies:
@@ -4318,8 +4331,8 @@ packages:
   es-toolkit@1.44.0:
     resolution: {integrity: sha512-6penXeZalaV88MM3cGkFZZfOoLGWshWWfdy0tWw/RlVVyhvMaWSBTOvXNeiW3e5FwdS5ePW0LGEu17zT139ktg==}
 
-  es-toolkit@1.46.0:
-    resolution: {integrity: sha512-IToJ6ct9OLl5zz6WsC/1vZEwfSZ7Myil+ygl5Tf30Xjn9AEkzNB4kqp2G7VUJKF1DtTx/ra5M5KLlXvzOg51BA==}
+  es-toolkit@1.50.0:
+    resolution: {integrity: sha512-OyZKhUVvEep9ITEiwHn8GKnMRQIVqoSIX7WnRbkWgJkllCujilqP2rD0u979tkl8wqyc8ICwlc1UBVv/Sl1G6w==}
 
   esbuild@0.27.1:
     resolution: {integrity: sha512-yY35KZckJJuVVPXpvjgxiCuVEJT67F6zDeVTv4rizyPrfGBUpZQsvmxnN+C371c2esD/hNMjj4tpBhuueLN7aA==}
@@ -5261,6 +5274,9 @@ packages:
 
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
+
+  json-with-bigint@3.5.11:
+    resolution: {integrity: sha512-WvkM9Hfb9kqzCcbsvpwfWDvdfGZDhYuCoaCwHRe5q3LtULKkbrI/L6JYcN8owflgA3di5dP2yVAV2NVCXkgtkA==}
 
   json5@2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
@@ -7220,6 +7236,9 @@ packages:
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
+  undici-types@7.24.6:
+    resolution: {integrity: sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg==}
+
   undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
@@ -8812,6 +8831,8 @@ snapshots:
 
   '@date-fns/tz@1.4.1': {}
 
+  '@date-fns/tz@1.5.0': {}
+
   '@devframes/hub@0.6.2(devframe@0.6.2(srvx@0.11.22)(typescript@6.0.2))':
     dependencies:
       birpc: 4.0.0
@@ -10092,18 +10113,16 @@ snapshots:
 
   '@poppinss/exception@1.2.3': {}
 
-  '@proj-airi/duckdb-wasm@0.5.0(drizzle-orm@0.39.1)':
+  '@proj-airi/duckdb-wasm@0.6.0(drizzle-orm@0.39.1)':
     dependencies:
-      '@date-fns/tz': 1.4.1
+      '@date-fns/tz': 1.5.0
       '@duckdb/duckdb-wasm': 1.29.1-dev68.0
       '@moeru/std': 0.1.0-beta.1
-      apache-arrow: 21.1.0
-      date-fns: 4.1.0
+      apache-arrow: 21.2.0
+      date-fns: 4.4.0
       defu: 6.1.7
       drizzle-orm: 0.39.1
-      es-toolkit: 1.46.0
-    transitivePeerDependencies:
-      - '@75lb/nature'
+      es-toolkit: 1.50.0
 
   '@quansync/fs@1.0.0':
     dependencies:
@@ -10644,6 +10663,10 @@ snapshots:
   '@types/node@24.9.1':
     dependencies:
       undici-types: 7.16.0
+
+  '@types/node@25.9.5':
+    dependencies:
+      undici-types: 7.24.6
 
   '@types/node@26.2.0':
     dependencies:
@@ -11769,6 +11792,13 @@ snapshots:
     transitivePeerDependencies:
       - '@75lb/nature'
 
+  apache-arrow@21.2.0:
+    dependencies:
+      '@types/node': 25.9.5
+      flatbuffers: 25.2.10
+      json-with-bigint: 3.5.11
+      tslib: 2.8.1
+
   archiver-utils@5.0.2:
     dependencies:
       glob: 10.5.0
@@ -12303,6 +12333,8 @@ snapshots:
 
   date-fns@4.1.0: {}
 
+  date-fns@4.4.0: {}
+
   db0@0.3.4(drizzle-orm@0.39.1):
     optionalDependencies:
       drizzle-orm: 0.39.1
@@ -12584,7 +12616,7 @@ snapshots:
 
   es-toolkit@1.44.0: {}
 
-  es-toolkit@1.46.0: {}
+  es-toolkit@1.50.0: {}
 
   esbuild@0.27.1:
     optionalDependencies:
@@ -13634,6 +13666,8 @@ snapshots:
   json-schema-traverse@1.0.0: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
+
+  json-with-bigint@3.5.11: {}
 
   json5@2.2.3: {}
 
@@ -16054,6 +16088,8 @@ snapshots:
   undici-types@6.19.8: {}
 
   undici-types@7.16.0: {}
+
+  undici-types@7.24.6: {}
 
   undici-types@8.3.0: {}
 
